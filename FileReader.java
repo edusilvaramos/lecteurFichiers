@@ -3,6 +3,9 @@ package lecteurFichiers;
 import java.io.File;
 import java.util.Scanner;
 import lecteurFichiers.readers.CsvRead;
+import lecteurFichiers.readers.DocxRead;
+import lecteurFichiers.readers.JsonRead;
+import lecteurFichiers.readers.PdfRead;
 import lecteurFichiers.readers.TxtRead;
 
 public class FileReader {
@@ -96,14 +99,94 @@ public class FileReader {
                     break;
                 case 3:
                     System.out.println("-----------  PDF  -----------");
+                    for (File f : files) {
+                        String name = f.getName();
+                        // System.out.println(name);
+                        if (name.endsWith(".pdf")) {
+                            String dirPath = dir + File.separator + name;
+                            // System.out.println("Path: " + dirPath);
+                            PdfRead pdfRead = new PdfRead(dirPath);
+                            try {
+                                pdfRead.read();
+                                System.out.println("");
+                                System.out.println("");
+                                System.out.println("---------- INVERSE ------------");
+                                pdfRead.inverse();
+                                System.out.println("");
+                                System.out.println("---------- PALINDROMIQUE ------------");
+                                pdfRead.palindromique();
+                                System.out.println("");
+                                System.out.println("");
+                                System.out.println("---------- COMPARE TO ------------");
+                            } catch (Exception e) {
+                                e.getStackTrace();
+                            }
+                            System.out.println("----------------------");
+                            break;
+                        }
+                    }
                     break;
                 case 4:
                     System.out.println("-----------  DOCX  -----------");
+                    for (File f : files) {
+                        String name = f.getName();
+                        // System.out.println(name);
+                        if (name.endsWith(".docx")) {
+                            String dirPath = dir + File.separator + name;
+                            // System.out.println("Path: " + dirPath);
+                            DocxRead docxRead = new DocxRead(dirPath);
+                            try {
+                                docxRead.read();
+                                System.out.println("");
+                                System.out.println("");
+                                System.out.println("---------- INVERSE ------------");
+                                docxRead.inverse();
+                                System.out.println("");
+                                System.out.println("---------- PALINDROMIQUE ------------");
+                                docxRead.palindromique();
+                                System.out.println("");
+                                System.out.println("");
+                                System.out.println("---------- COMPARE TO ------------");
+                            } catch (Exception e) {
+                                e.getStackTrace();
+                            }
+                            System.out.println("----------------------");
+                            break;
+                        }
+                    }
                     break;
                 case 5:
                     System.out.println("-----------  JSON  -----------");
+                    for (File f : files) {
+                        String name = f.getName();
+                        // System.out.println(name);
+                        if (name.endsWith(".json")) {
+                            String dirPath = dir + File.separator + name;
+                            // System.out.println("Path: " + dirPath);
+                            JsonRead JsonRead = new JsonRead(dirPath);
+                            try {
+                                JsonRead.read();
+                                System.out.println("");
+                                System.out.println("");
+                                System.out.println("---------- INVERSE ------------");
+                                JsonRead.inverse();
+                                System.out.println("");
+                                System.out.println("---------- PALINDROMIQUE ------------");
+                                JsonRead.palindromique();
+                                System.out.println("");
+                                System.out.println("");
+                                System.out.println("---------- COMPARE TO ------------");
+                            } catch (Exception e) {
+                                e.getStackTrace();
+                            }
+                            System.out.println("----------------------");
+                            break;
+                        }
+                    }
                     break;
             }
+
         }
+
     }
 }

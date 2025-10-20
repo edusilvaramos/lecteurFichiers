@@ -1,0 +1,16 @@
+{
+  "user": {
+    "id": 1,
+    "name": "example example",
+    "email": "edu@example.com",
+    "active": true
+  },
+  "items": [
+    { "sku": "SKU-001", "title": "Notebook", "price": 19.9, "qty": 2 },
+    { "sku": "SKU-002", "title": "Coffee Beans", "price": 34.5, "qty": 1 }
+  ],
+  "total": 74.3,
+  "currency": "USD",
+  "createdAt": "2025-10-20T08:00:00Z",
+  "notes": null
+}
