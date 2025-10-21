@@ -8,6 +8,4 @@ public interface interfaceRead {
     public void inverse() throws IOException;
 
     public void palindromique();
-
-    // public void compareTo();
-}
+    }

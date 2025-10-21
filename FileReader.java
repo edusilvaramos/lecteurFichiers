@@ -1,6 +1,7 @@
 package lecteurFichiers;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 import lecteurFichiers.readers.CsvRead;
 import lecteurFichiers.readers.DocxRead;
@@ -26,6 +27,7 @@ public class FileReader {
             System.out.println("3 -> pdf");
             System.out.println("4 -> docx");
             System.out.println("5 -> json");
+            System.out.println("6 -> Compare to");
             System.out.println("0 -> exit");
             System.out.println("----------------------");
             String typeFile = scanner.nextLine();
@@ -33,7 +35,7 @@ public class FileReader {
             if (typeFile.equals("0")) {
                 break;
             }
-            if (Integer.parseInt(typeFile) < 0 || Integer.parseInt(typeFile) > 5) {
+            if (Integer.parseInt(typeFile) < 0 || Integer.parseInt(typeFile) > 6) {
                 System.out.println("Invalid option !!");
                 continue;
             }
@@ -50,20 +52,12 @@ public class FileReader {
                             TxtRead textRead = new TxtRead(dirPath);
                             try {
                                 textRead.read();
-                                System.out.println("");
-                                System.out.println("");
-                                System.out.println("---------- INVERSE ------------");
                                 textRead.inverse();
                                 System.out.println("");
-                                System.out.println("---------- PALINDROMIQUE ------------");
                                 textRead.palindromique();
-                                System.out.println("");
-                                System.out.println("");
-                                System.out.println("---------- COMPARE TO ------------");
                             } catch (Exception e) {
                                 e.getStackTrace();
                             }
-                            System.out.println("----------------------");
                             break;
                         }
                     }
@@ -79,20 +73,11 @@ public class FileReader {
                             CsvRead CsvRead = new CsvRead(dirPath);
                             try {
                                 CsvRead.read();
-                                System.out.println("");
-                                System.out.println("");
-                                System.out.println("---------- INVERSE ------------");
                                 CsvRead.inverse();
-                                System.out.println("");
-                                System.out.println("---------- PALINDROMIQUE ------------");
                                 CsvRead.palindromique();
-                                System.out.println("");
-                                System.out.println("");
-                                System.out.println("---------- COMPARE TO ------------");
                             } catch (Exception e) {
                                 e.getStackTrace();
                             }
-                            System.out.println("----------------------");
                             break;
                         }
                     }
@@ -108,20 +93,12 @@ public class FileReader {
                             PdfRead pdfRead = new PdfRead(dirPath);
                             try {
                                 pdfRead.read();
-                                System.out.println("");
-                                System.out.println("");
-                                System.out.println("---------- INVERSE ------------");
                                 pdfRead.inverse();
                                 System.out.println("");
-                                System.out.println("---------- PALINDROMIQUE ------------");
                                 pdfRead.palindromique();
-                                System.out.println("");
-                                System.out.println("");
-                                System.out.println("---------- COMPARE TO ------------");
                             } catch (Exception e) {
                                 e.getStackTrace();
                             }
-                            System.out.println("----------------------");
                             break;
                         }
                     }
@@ -134,23 +111,15 @@ public class FileReader {
                         if (name.endsWith(".docx")) {
                             String dirPath = dir + File.separator + name;
                             // System.out.println("Path: " + dirPath);
-                            DocxRead docxRead = new DocxRead(dirPath);
+                            ReadAbstract docxRead = new DocxRead(dirPath);
                             try {
                                 docxRead.read();
-                                System.out.println("");
-                                System.out.println("");
-                                System.out.println("---------- INVERSE ------------");
                                 docxRead.inverse();
                                 System.out.println("");
-                                System.out.println("---------- PALINDROMIQUE ------------");
                                 docxRead.palindromique();
-                                System.out.println("");
-                                System.out.println("");
-                                System.out.println("---------- COMPARE TO ------------");
                             } catch (Exception e) {
                                 e.getStackTrace();
                             }
-                            System.out.println("----------------------");
                             break;
                         }
                     }
@@ -163,27 +132,39 @@ public class FileReader {
                         if (name.endsWith(".json")) {
                             String dirPath = dir + File.separator + name;
                             // System.out.println("Path: " + dirPath);
-                            JsonRead JsonRead = new JsonRead(dirPath);
+                            ReadAbstract JsonRead = new JsonRead(dirPath);
                             try {
                                 JsonRead.read();
-                                System.out.println("");
-                                System.out.println("");
-                                System.out.println("---------- INVERSE ------------");
                                 JsonRead.inverse();
                                 System.out.println("");
-                                System.out.println("---------- PALINDROMIQUE ------------");
                                 JsonRead.palindromique();
-                                System.out.println("");
-                                System.out.println("");
-                                System.out.println("---------- COMPARE TO ------------");
                             } catch (Exception e) {
                                 e.getStackTrace();
                             }
-                            System.out.println("----------------------");
                             break;
                         }
                     }
                     break;
+                case 6: {
+                    for (int i = 0; i < files.length; i++) {
+                        System.out.println(i + 1 + " -> " + files[i].getName());
+                    }
+                    System.out.print("Choose the first file: ");
+                    int i1 = Integer.parseInt(scanner.nextLine()) - 1;
+                    System.out.print("second file: ");
+                    int i2 = Integer.parseInt(scanner.nextLine()) - 1;
+
+                    try {
+                        String resumo = ReadAbstract.compareTo(files[i1], files[i2]);
+                        System.out.println("== result ==");
+                        System.out.println(resumo);
+                    } catch (IOException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                    break;
+
+                }
+
             }
 
         }
