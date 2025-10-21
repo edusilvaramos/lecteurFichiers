@@ -1,10 +1,8 @@
 package lecteurFichiers;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -88,7 +86,9 @@ public abstract class ReadAbstract implements interfaceRead {
 
         boolean sameContent = false;
         if (sameSize) {
-            try (InputStream in1 = new BufferedInputStream(new FileInputStream(a)); InputStream in2 = new BufferedInputStream(new java.io.FileInputStream(b))) {
+            try (
+                FileInputStream in1 = new FileInputStream(a);
+                FileInputStream in2 = new FileInputStream(b)) {
                 sameContent = true;
                 int x, y;
                 while ((x = in1.read()) != -1) {
