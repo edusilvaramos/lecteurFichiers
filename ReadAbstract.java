@@ -82,7 +82,7 @@ public abstract class ReadAbstract implements interfaceRead {
         String extB = typeFile(b);
         boolean sameType = extA.equalsIgnoreCase(extB);
 
-        int sizeA = (int) a.length();
+        long sizeA = a.length();
         long sizeB = b.length();
         boolean sameSize = sizeA == sizeB;
 
