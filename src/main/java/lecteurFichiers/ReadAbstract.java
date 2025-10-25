@@ -1,11 +1,11 @@
 package lecteurFichiers;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ReadAbstract implements interfaceRead {
@@ -34,45 +34,69 @@ public abstract class ReadAbstract implements interfaceRead {
         System.out.println("");
     }
 
-    // by line
     @Override
     public void inverse() throws IOException {
         System.out.println("---------- INVERSE ------------");
-        // lines list
-        List<String> line = Files.readAllLines(Paths.get(this.pathFile), StandardCharsets.UTF_8);
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(new FileInputStream(this.pathFile)))) {
+            // System.out.println(br.readLine());
+            String line;
+            while ((line = br.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        inverseLines(lines);
+        System.out.println();
+    }
+
+    protected static String inverseLines(List<String> line) {
+        StringBuilder out = new StringBuilder();
         for (int i = line.size() - 1; i >= 0; i--) {
             System.out.println(line.get(i));
         }
-        System.out.println("");
+        return out.toString();
     }
 
-    // by char
     @Override
     public void palindromique() {
         System.out.println("---------- PALINDROMIQUE ------------");
-        try (
-                FileInputStream in = new FileInputStream(this.pathFile)) {
-            // to create an acumulator
-            StringBuilder word = new StringBuilder();
-            int i = 0;
-            while ((i = in.read()) != -1) {
-                char ch = (char) i;
-                if (Character.isLetter(ch)) {
-                    // get the letters
-                    word.append(ch);
-                } else {
-                    // reverse == palindromique 
-                    System.out.print(word.reverse().toString());
-                    word.setLength(0);
-                    // print separators
-                    System.out.print(ch);
-                }
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(new FileInputStream(this.pathFile)))) {
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(reverseEachWord(line));
             }
         } catch (IOException e) {
-            e.getStackTrace();
+            e.printStackTrace();
         }
-        System.out.println("");
-        System.out.println("");
+        System.out.println();
+    }
+
+    protected static String reverseEachWord(String line) {
+        StringBuilder out = new StringBuilder(line.length());
+        StringBuilder word = new StringBuilder();
+
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (Character.isLetter(c)) {
+                word.append(c);
+            } else {
+                if (word.length() > 0) {
+                    out.append(word.reverse());
+                    word.setLength(0);
+                }
+                out.append(c);
+            }
+        }
+        // flush final
+        if (word.length() > 0) {
+            out.append(word.reverse());
+        }
+        return out.toString();
     }
 
     public static String compareTo(File a, File b) throws IOException {
@@ -87,8 +111,7 @@ public abstract class ReadAbstract implements interfaceRead {
         boolean sameContent = false;
         if (sameSize) {
             try (
-                FileInputStream in1 = new FileInputStream(a);
-                FileInputStream in2 = new FileInputStream(b)) {
+                    FileInputStream in1 = new FileInputStream(a); FileInputStream in2 = new FileInputStream(b)) {
                 sameContent = true;
                 int x, y;
                 while ((x = in1.read()) != -1) {
@@ -106,6 +129,7 @@ public abstract class ReadAbstract implements interfaceRead {
                 + " //// content: " + (sameContent ? "egual" : "different");
     }
 
+    // get the type/ after "."
     private static String typeFile(File f) {
         String n = f.getName();
         int p = n.lastIndexOf('.');

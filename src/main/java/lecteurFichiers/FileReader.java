@@ -3,6 +3,7 @@ package lecteurFichiers;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+
 import lecteurFichiers.readers.CsvRead;
 import lecteurFichiers.readers.DocxRead;
 import lecteurFichiers.readers.JsonRead;
@@ -13,10 +14,10 @@ public class FileReader {
 
     public static void main(String[] args) {
 
-        File dir = new File(System.getProperty("user.dir") + "/lecteurFichiers/files");
-        System.out.println(dir);
+        File dir = new File(System.getProperty("user.dir") + "/src/main/resources/files/");
+        // System.out.println(dir);
         File[] files = dir.listFiles(File::isFile);
-        System.out.println(files.length);
+        // System.out.println(files.length);
         System.out.println("----------------------");
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -30,13 +31,21 @@ public class FileReader {
             System.out.println("6 -> Compare to");
             System.out.println("0 -> exit");
             System.out.println("----------------------");
-            String typeFile = scanner.nextLine();
+            String typeFile = scanner.nextLine().trim();
 
-            if (typeFile.equals("0")) {
+            int option;
+            try {
+                option = Integer.parseInt(typeFile);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid option !!");
+                continue;
+            }
+
+            if (option == 0) {
                 break;
             }
-            if (Integer.parseInt(typeFile) < 0 || Integer.parseInt(typeFile) > 6) {
-                System.out.println("Invalid option !!");
+            if (option < 0 || option > 6) {
+                System.out.println("Invalid option !!!!!!");
                 continue;
             }
 

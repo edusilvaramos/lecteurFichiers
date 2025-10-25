@@ -3,3 +3,6 @@
 .embold/
 **/class/
 *.class
+.vscode/
+target/
+.embold/
