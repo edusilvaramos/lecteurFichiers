@@ -21,3 +21,4 @@ https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox/3.0.6
 https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml/5.4.1
 https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 https://youtu.be/N7AyIfUQxGc?si=aexcggBr6lujNKA9
+https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.20.0
